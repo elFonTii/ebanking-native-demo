@@ -1,5 +1,6 @@
 import { View, Text, Button } from "react-native";
 import { StyleSheet } from "react-native";
+import { PageHeader } from "../_shared";
 
 const HomeStyles = StyleSheet.create({
   main: {
@@ -30,13 +31,13 @@ const HomeStyles = StyleSheet.create({
   },
 });
 
-export const Home = ({ navigation }) => {
+export const Home = ({ navigation, user }) => {
   return (
     <View style={HomeStyles.main}>
-      <Text style={HomeStyles.title}>Home</Text>
+      <PageHeader user={user} />
       <View style={HomeStyles.Button}>
         <Button
-          title="<"
+          title="Volver a iniciar sesión"
           onPress={() => {
             navigation.navigate("Signin");
           }}

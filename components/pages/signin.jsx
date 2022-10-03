@@ -62,6 +62,13 @@ export const Signin = ({ navigation }) => {
   const [user, setUser] = useState({ email: null, password: null });
   const [error, setError] = useState(null);
 
+  /* Reset states */
+  useEffect(() => {
+    setForm({ email: "", password: "" });
+    setUser({ email: null, password: null });
+    setError(null);
+  }, []);
+
   /* Functions */
   const handleInput = (e, field) => {
     setForm({
@@ -72,8 +79,12 @@ export const Signin = ({ navigation }) => {
 
   const handleSignin = () => {
     //regex
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    //const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+    //Regex that allows any character
+    const emailRegex = /.+/;
+    const passwordRegex = /.+/;
 
     //if email or password is empty
     if (!form.email || !form.password) {
@@ -95,7 +106,7 @@ export const Signin = ({ navigation }) => {
 
   useEffect(() => {
     if (user.email && user.password) {
-      navigation.navigate("Home");
+      navigation.navigate("Home", { user });
     }
   }, [user]);
 
@@ -118,8 +129,9 @@ export const Signin = ({ navigation }) => {
           secureTextEntry={true}
         />
         <Text style={SigninStyles.helperText}>
-          The password must contain at least 8 characters, one uppercase letter,
-          one lowercase letter and one number
+          {/*  The password must contain at least 8 characters, one uppercase letter,
+          one lowercase letter and one number */}
+          The password regex is currently allowing any character
         </Text>
         <View style={SigninStyles.Button}>
           <Button title="Sign in" onPress={handleSignin} />
