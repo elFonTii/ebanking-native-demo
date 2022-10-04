@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { MainLayout } from "../layouts";
+import { BottomLinks } from "../misc/BottomLinks";
 import { Text, View, TextInput, Button } from "react-native";
 import { StyleSheet } from "react-native";
 
@@ -146,6 +147,7 @@ export const Signin = ({ navigation }) => {
           </View>
         )}
       </View>
+      <BottomLinks />
     </MainLayout>
   );
 };

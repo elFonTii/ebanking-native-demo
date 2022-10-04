@@ -2,6 +2,7 @@ import { View, Image, Text, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import { colors } from "../../styles";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import Chip from "./Chip";
 import {
   faBars,
   faBell,
@@ -102,29 +103,6 @@ export const PageHeader = ({ user }) => {
           icon={faCheckCircle}
         />
       </View>
-    </View>
-  );
-};
-
-const Chip = ({ label, color = "#fff" }) => {
-  return (
-    <View
-      style={{
-        backgroundColor: color,
-        padding: 10,
-        borderRadius: "50%",
-        marginRight: 10,
-      }}
-    >
-      <Text
-        style={{
-          color: colors.primary,
-          fontSize: 12,
-          fontWeight: "bold",
-        }}
-      >
-        {label}
-      </Text>
     </View>
   );
 };

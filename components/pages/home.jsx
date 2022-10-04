@@ -1,6 +1,19 @@
-import { View, Text, Button } from "react-native";
-import { StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TouchableHighlight,
+} from "react-native";
+import { useEffect } from "react";
 import { PageHeader } from "../_shared";
+import Chip from "../_shared/Chip";
+import {
+  faFingerprint,
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { colors } from "../../styles";
 
 const HomeStyles = StyleSheet.create({
   main: {
@@ -29,20 +42,94 @@ const HomeStyles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
   },
+  icon: {
+    color: colors.secondary,
+    marginRight: 10,
+  },
 });
 
-export const Home = ({ navigation, user }) => {
+export const Home = ({ navigation, route }) => {
+  const { user } = route.params;
+
+  // If the user is not logged in, redirect to the login page
+  useEffect(() => {
+    if (!user) {
+      navigation.navigate("Signin");
+    }
+  }, [user]);
+
   return (
-    <View style={HomeStyles.main}>
-      <PageHeader user={user} />
-      <View style={HomeStyles.Button}>
-        <Button
-          title="Volver a iniciar sesión"
-          onPress={() => {
-            navigation.navigate("Signin");
-          }}
-        />
+    <>
+      {user && (
+        <View style={HomeStyles.main}>
+          <PageHeader user={user} />
+          {/* Notifications */}
+          <View style={{ display: "flex", flexDirection: "column" }}>
+            <Notification
+              title="Setup biometric authentication"
+              desc="You have not registered your biometric authentication yet. Please register for a better authentication experience."
+              chip="1 min"
+              icon={faFingerprint}
+            />
+            <Notification
+              title="You have a new payment"
+              desc="loremipsumdaloremipsumdaloremipsumdaloremipsumdaloremipsumdaloremipsumda"
+              chip="30 secs"
+              icon={faLocationDot}
+            />
+          </View>
+          <View style={HomeStyles.Button}>
+            <Button
+              title="Volver a iniciar sesión"
+              onPress={() => {
+                navigation.navigate("Signin");
+              }}
+            />
+          </View>
+        </View>
+      )}
+    </>
+  );
+};
+
+const Notification = ({ title, desc, icon, chip }) => {
+  return (
+    <TouchableHighlight style={{ width: "100%" }} underlayColor="white">
+      <View
+        style={{
+          shadowColor: "#666",
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+          elevation: 2,
+          backgroundColor: "#fff",
+          padding: 30,
+          marginVertical: 5,
+          maxWidth: "90%",
+          borderRadius: "8",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          "&:hover": {
+            backgroundColor: "#f5f5f5",
+          },
+        }}
+      >
+        <FontAwesomeIcon icon={icon} style={HomeStyles.icon} size={25} />
+        <View>
+          <Text
+            style={{
+              color: colors.black,
+              fontSize: 14,
+              fontWeight: "bold",
+            }}
+          >
+            {title}
+          </Text>
+          <Text style={{ color: colors.darkGrey, fontSize: 12 }}>{desc}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableHighlight>
   );
 };
