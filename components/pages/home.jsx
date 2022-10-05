@@ -49,46 +49,33 @@ const HomeStyles = StyleSheet.create({
 });
 
 export const Home = ({ navigation, route }) => {
-  const { user } = route.params;
-
-  // If the user is not logged in, redirect to the login page
-  useEffect(() => {
-    if (!user) {
-      navigation.navigate("Signin");
-    }
-  }, [user]);
-
   return (
-    <>
-      {user && (
-        <View style={HomeStyles.main}>
-          <PageHeader user={user} />
-          {/* Notifications */}
-          <View style={{ display: "flex", flexDirection: "column" }}>
-            <Notification
-              title="Setup biometric authentication"
-              desc="You have not registered your biometric authentication yet. Please register for a better authentication experience."
-              chip="1 min"
-              icon={faFingerprint}
-            />
-            <Notification
-              title="You have a new payment"
-              desc="loremipsumdaloremipsumdaloremipsumdaloremipsumdaloremipsumdaloremipsumda"
-              chip="30 secs"
-              icon={faLocationDot}
-            />
-          </View>
-          <View style={HomeStyles.Button}>
-            <Button
-              title="Volver a iniciar sesión"
-              onPress={() => {
-                navigation.navigate("Signin");
-              }}
-            />
-          </View>
-        </View>
-      )}
-    </>
+    <View style={HomeStyles.main}>
+      <PageHeader />
+      {/* Notifications */}
+      <View style={{ display: "flex", flexDirection: "column" }}>
+        <Notification
+          title="Setup biometric authentication"
+          desc="You have not registered your biometric authentication yet. Please register for a better authentication experience."
+          chip="1 min"
+          icon={faFingerprint}
+        />
+        <Notification
+          title="Where i am?"
+          desc="Have you ever wondered where you are? Well, now you can find out where you are with our new geolocation feature."
+          chip="30 secs"
+          icon={faLocationDot}
+        />
+      </View>
+      <View style={HomeStyles.Button}>
+        <Button
+          title="Volver a iniciar sesión"
+          onPress={() => {
+            navigation.navigate("Signin");
+          }}
+        />
+      </View>
+    </View>
   );
 };
 
@@ -117,7 +104,7 @@ const Notification = ({ title, desc, icon, chip }) => {
         }}
       >
         <FontAwesomeIcon icon={icon} style={HomeStyles.icon} size={25} />
-        <View>
+        <View style={{ marginRight: 10 }}>
           <Text
             style={{
               color: colors.black,
@@ -127,7 +114,14 @@ const Notification = ({ title, desc, icon, chip }) => {
           >
             {title}
           </Text>
-          <Text style={{ color: colors.darkGrey, fontSize: 12 }}>{desc}</Text>
+          <Text
+            style={{
+              color: colors.darkGrey,
+              fontSize: 12,
+            }}
+          >
+            {desc}
+          </Text>
         </View>
       </View>
     </TouchableHighlight>

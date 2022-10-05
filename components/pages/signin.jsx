@@ -3,6 +3,7 @@ import { MainLayout } from "../layouts";
 import { BottomLinks } from "../misc/BottomLinks";
 import { Text, View, TextInput, Button } from "react-native";
 import { StyleSheet } from "react-native";
+import api from "../../libs/axios";
 
 const SigninStyles = StyleSheet.create({
   title: {
@@ -96,15 +97,21 @@ export const Signin = ({ navigation }) => {
     ) {
       setError("Please enter a valid email and password");
     } else {
-      setError(null);
-      setUser(form);
-      setForm({
-        email: "",
-        password: "",
-      });
+      signinUser();
     }
   };
 
+  const signinUser = async () => {
+    try {
+      const res = await api.post("/api/signin", form);
+      const { email, password } = res.data.user;
+      setUser({ email, password });
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+  };
+
+  /* Navigate to homepage */
   useEffect(() => {
     if (user.email && user.password) {
       navigation.navigate("Home", { user });
